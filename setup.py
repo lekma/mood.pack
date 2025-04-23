@@ -1,29 +1,11 @@
 # -*- coding: utf-8 -*-
 
-#
-# Copyright © 2025 Malek Hadj-Ali
-# All rights reserved.
-#
-# This file is part of mood.
-#
-# mood is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License version 3
-# as published by the Free Software Foundation.
-#
-# mood is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with mood.  If not, see <http://www.gnu.org/licenses/>.
-#
-
 
 from setuptools import setup, find_packages, Extension
 
 from codecs import open
 from os.path import abspath
+from sys import argv, byteorder, maxsize
 
 
 pkg_name = "mood.pack"
@@ -32,6 +14,13 @@ pkg_desc = "mood pack module"
 
 PKG_VERSION = ("PKG_VERSION", "\"{0}\"".format(pkg_version))
 
+
+# setup
+if ("sdist" not in argv):
+    if (byteorder != "little"):
+        raise SystemExit(f"Aborted: {pkg_name} requires a little endian CPU host")
+    if (maxsize != ((2**63) - 1)):
+        raise SystemExit(f"Aborted: {pkg_name} requires a 64 bits integer type")
 
 setup(
     name=pkg_name,
@@ -47,7 +36,7 @@ setup(
     },
     author="Malek Hadj-Ali",
     author_email="lekmalek@gmail.com",
-    license="GNU General Public License v3 (GPLv3)",
+    license="The Unlicense (Unlicense)",
     platforms=["POSIX"],
     keywords="pack",
 
@@ -63,6 +52,9 @@ setup(
             "pack",
             [
                 "src/helpers/helpers.c",
+                "src/_pack.c",
+                "src/_instance.c",
+                "src/_unpack.c",
                 "src/pack.c"
             ],
             define_macros=[PKG_VERSION]
@@ -70,11 +62,11 @@ setup(
     ],
 
     classifiers=[
-          "Development Status :: 5 - Production/Stable",
-          "Intended Audience :: Developers",
-          "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-          "Operating System :: POSIX",
-          "Programming Language :: Python :: 3.10",
-          "Programming Language :: Python :: Implementation :: CPython"
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: The Unlicense (Unlicense)",
+        "Operating System :: POSIX",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: Implementation :: CPython"
     ]
 )
