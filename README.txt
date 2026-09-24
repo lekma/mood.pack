@@ -1,3 +1,3 @@
-mood.db
+mood.pack
 
 mood pack module

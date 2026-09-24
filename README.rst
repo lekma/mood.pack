@@ -1,5 +1,5 @@
-mood.sockets
-============
+mood.pack
+=========
 
 mood pack module
 
